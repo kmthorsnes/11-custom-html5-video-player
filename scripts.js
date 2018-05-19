@@ -8,19 +8,19 @@ const skipButtons = player.querySelectorAll('[data-skip]');
 const ranges = player.querySelectorAll('[player__slider]');
 
 // Build functions //
-function togglePlay() {
+/* function togglePlay() {
     const method = video.paused ? 'play' : 'pause';
     if (video.paused) {
         video.play();
     } else {
         video.pause();
     }
-}
+} */
 // alternative 
-/* function togglePlay() {
+function togglePlay() {
     const method = video.paused ? 'play' : 'pause';
     video[method]();
-} */
+}
 
 function updateButton(){
     const icon = this.paused ? '►' : '❚ ❚';
@@ -29,9 +29,14 @@ function updateButton(){
 }
 
 function skip() {
-    console.log(this.dataset.skip);
     video.currentTime += parseFloat(this.dataset.skip);
 }
+
+function handleRangeUpdate() {
+    video[this.name] = this.value;
+  }
+
+
 
 // Hook up event listeners
 video.addEventListener('click', togglePlay);
@@ -40,3 +45,5 @@ video.addEventListener('pause', updateButton);
 
 toggle.addEventListener('click', togglePlay);
 skipButtons.forEach(button => button.addEventListener('click', skip));
+ranges.forEach(range => range.addEventListener('change', handleRangeUpdate));
+ranges.forEach(range => range.addEventListener('mousemove', handleRangeUpdate));
